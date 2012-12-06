@@ -17,9 +17,9 @@ public class Game
 
     public void paint(Graphics g)
     {
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillRect(0, 0, width, height);
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.GREEN);
         g.fillRect(5, 5, width - 10, height - 10);
 
         Point start = new Point(width / 2, height / 2);
