@@ -1,5 +1,7 @@
 package com.madcoretom.tutorial.game;
 
+import com.madcoretom.tutorial.game.control.Keyboard;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,6 +31,7 @@ public class AppMain
 
         frame.pack();
         frame.setVisible(true);
+        frame.addKeyListener(Keyboard.getInstance());
 
         timer.start();
     }

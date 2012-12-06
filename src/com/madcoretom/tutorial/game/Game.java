@@ -1,5 +1,7 @@
 package com.madcoretom.tutorial.game;
 
+import com.madcoretom.tutorial.game.control.Keyboard;
+
 import java.awt.*;
 
 public class Game
@@ -7,7 +9,14 @@ public class Game
     private int width;
     private int height;
 
-    private float angle = 0;
+    private final float GRAVITY = 0.2f;
+    private static final int PLAYER_HEIGHT = 20;
+    private static final int PLAYER_X = 40;
+    private static final float THRUSTER_FORCE = -0.5f;
+    private static final float BOUNCE_FACTOR = 0.25f;
+
+    private float playerY = 0;
+    private float playerVelocity = 0;
 
     public Game(int width, int height)
     {
@@ -17,23 +26,31 @@ public class Game
 
     public void paint(Graphics g)
     {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.GRAY);
         g.fillRect(0, 0, width, height);
-        g.setColor(Color.GREEN);
-        g.fillRect(5, 5, width - 10, height - 10);
 
-        Point start = new Point(width / 2, height / 2);
-        Point end = new Point(width / 2 + (int) (Math.sin(angle) * 100), height / 2 + (int) (Math.cos(angle) * 100));
-        g.setColor(Color.BLACK);
-        g.drawLine(start.x, start.y, end.x, end.y);
+        g.setColor(Color.WHITE);
+        g.drawLine(0, height - 20, width, height - 20);
+
+        // Draw an circle with the bottom at playerY and the middle at PLAYER_X
+        g.drawOval(PLAYER_X - PLAYER_HEIGHT / 2, (int) (playerY) - PLAYER_HEIGHT, PLAYER_HEIGHT, PLAYER_HEIGHT);
     }
 
     public void update(int time)
     {
-        angle += time * 0.001;
-        if (angle > Math.PI * 2)
+        playerVelocity += GRAVITY;
+
+        if (Keyboard.getInstance().isKeyDown())
         {
-            angle -= (float) (Math.PI * 2);
+            playerVelocity += THRUSTER_FORCE;
+        }
+
+        playerY += playerVelocity;
+        int floor = height - 20;
+        if (playerY > floor)
+        {
+            playerVelocity = -playerVelocity * BOUNCE_FACTOR;
+            playerY = floor;
         }
     }
 }

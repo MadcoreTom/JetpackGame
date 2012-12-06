@@ -1,5 +1,7 @@
 package com.madcoretom.tutorial.game;
 
+import com.madcoretom.tutorial.game.control.Keyboard;
+
 import javax.swing.*;
 
 public class AppletMain extends JApplet
@@ -12,6 +14,10 @@ public class AppletMain extends JApplet
         game = new Game(getWidth(), getHeight());
         add(new GamePanel(game));
         timer = new Timer(this, game, 25);
+
+        setFocusable(true);
+        requestFocus();
+        addKeyListener(Keyboard.getInstance());
         timer.start();
     }
 
